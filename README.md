@@ -1,33 +1,13 @@
-Ramverk som används av angular projektet
-Material Design 2
-Teradata Covalent (extension till Material Design 2) 
-Firebase
+# B3Runtime Backoffice
 
-Rekommenderad verktyg:
-Visual Studio Code
-    Extensions:
-    Angular 5 Snippets
-    Angular Files
-    Angular Material 2, Flex layout 1, Covalent 1 & Material icon snippets
-    Angular v4 TypeScript Snippets
-    Auto Import
-    Auto Rename Tag
-    Bautify
-    HTML Class Suggestions
-    jslint
-    SimonTest
-    TSLint
-    TypeScript Hero
-    vscode-icons
+### Administrator tool for B3Runtime
 
-Första gången installation:
-npm install
+## Installation
+To install the required components needed to run the app, run the following command in the root folder using a terminal:
 
-För att köra server lokalt:
-npm run start
+`npm install`
 
-För att bygga för "prod":
-npm run build-prod
+## Development
+During development you may start the development server locally by running:
 
-För att dpeloya till prod:
-npm run build-deploy-prod
+`npm run start`

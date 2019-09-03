@@ -1,0 +1,55 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+md-error:not(:first-of-type) {
+  display: none;
+}
+
+.mat-card-back-button {
+  margin: 8px;
+}
+
+.auto-expand {
+  height: 1em !important;
+  transition: all 0.5s ease;
+}
+
+.auto-expand:focus {
+  height: 7em !important;
+}
+
+.mat-text-align {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+/* horizontal divider start */
+.horizontal-or-divider {
+  position: relative;
+  width: 80%;
+  height: 1px;
+  background: #ddd;
+  margin: 30px auto;
+}
+
+.horizontal-or-divider:after {
+  content: 'eller';
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 15px;
+  font-size: 12px;
+  color: #666;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -15px;
+  margin-left: -15px;
+  text-align: center;
+}
+/* horizontal divider end */

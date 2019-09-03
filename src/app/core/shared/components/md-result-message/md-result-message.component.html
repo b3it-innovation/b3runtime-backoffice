@@ -1,0 +1,12 @@
+<!-- error message -->
+<div *ngIf="isError" [@grow]>
+  <td-message label="Ett fel inträffade" sublabel="{{ errorMessage }}" icon="error" color="warn">
+  </td-message>
+</div>
+
+<!-- success message -->
+<div *ngIf="isSuccess" [@grow]>
+  <td-message label="E-post har skickats" sublabel="{{ successMessage }}"
+    icon="info" color="accent">
+  </td-message>
+</div>

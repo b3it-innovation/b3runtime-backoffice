@@ -1,0 +1,96 @@
+<div layout="column" layout-align="center center">
+  <div class="page-container">
+    <app-md-card-progress-bar [showLoading]="(addQuestionActionState$ | async).isLoading">
+      <mat-card-title layout="row" layout-align="start center">
+        <mat-icon class="mat-icon-logo" svgIcon="assets:logo"></mat-icon>
+        <span class="md-title">Skapa fråga</span>
+      </mat-card-title>
+      <mat-card-subtitle>Skapa fråga med tillhörande titel, alternativ och rätt svar</mat-card-subtitle>
+      <mat-divider></mat-divider>
+      <mat-card-content class="push-bottom-none">
+        <form [formGroup]="createQuestionForm">
+
+          <div layout="row">
+            <mat-form-field flex>
+              <input matInput formControlName="title" placeholder="Titel..." type="text" name="title">
+              <mat-icon matSuffix>title</mat-icon>
+              <mat-error *ngIf="createQuestionForm.get('title').hasError('required')">
+                Titel är
+                <strong>obligatorisk</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div layout="row">
+            <mat-form-field flex>
+              <textarea class="auto-expand" matInput formControlName="questionText" placeholder="Fråga..."></textarea>
+              <mat-icon matSuffix>receipt</mat-icon>
+              <mat-error *ngIf="createQuestionForm.get('questionText').hasError('required')">
+                Fråga är
+                <strong>obligatorisk</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Button to add new option -->
+          <div layout="row">
+            <button flex mat-raised-button color="accent" (click)="onAddOption()" type="button" class="text-upper">Lägg till alternativ</button>
+          </div>
+
+          <!-- Display all options -->
+          <div formArrayName="answerOptions">
+            <div *ngFor="let option of answerOptions.controls; let i=index" [formGroupName]="i">
+              <div align="center" layout="row" layout-margin>
+                <div flex="5" class="mat-text-align">
+                  {{option.get('optionValue').value}}
+                  <input matInput formControlName="optionValue" type="text" style="display: none">
+                </div>
+                <mat-form-field flex>
+                  <textarea class="auto-expand" matInput formControlName="optionText" placeholder="Svarstext..."></textarea>
+                </mat-form-field>
+                <div align="right" flex="20">
+                  <button flex mat-raised-button color="warn" (click)="onRemoveOption(i)" class="text-upper">Ta bort</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="answerOptions.controls.length > 0">
+            <div layout="row">
+              <div>Rätt svar: </div>
+            </div>
+
+            <div layout="row">
+              <mat-radio-group formControlName="correctAnswer">
+                <div *ngFor="let option of answerOptions.controls; let i=index">
+                  <mat-radio-button [value]="option?.get('optionValue').value">
+                    {{option?.get('optionValue').value}} - {{option?.get('optionText').value}}
+                  </mat-radio-button>
+                </div>
+              </mat-radio-group>
+            </div>
+          </div>
+
+        </form>
+
+        <!-- When placed inside the form, formarrays are reset when adding new (previously not in store) categories -->
+        <div layout="row">
+          <div flex>
+            <app-quick-categories flex (addCategory)="onAddCategory($event)" (removeCategory)="onRemoveCategory($event)">
+            </app-quick-categories>
+          </div>
+        </div>
+
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <div layout="row">
+          <button flex mat-raised-button color="primary" [disabled]="createQuestionForm.invalid" (click)="onCreateQuestion()" class="text-upper">Lägg till...</button>
+        </div>
+      </mat-card-actions>
+    </app-md-card-progress-bar>
+    <div class="mat-card-back-button">
+      <button type="button" mat-raised-button color="warn" (click)="onGoBack()">Tillbaka</button>
+    </div>
+  </div>
+</div>

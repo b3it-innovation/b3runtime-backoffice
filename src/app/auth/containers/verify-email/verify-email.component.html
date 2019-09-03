@@ -1,0 +1,38 @@
+<div layout="column" layout-align="center center">
+  <div class="page-container">
+    <app-md-card-progress-bar [showLoading]="isLoading$ | async">
+      <mat-card-title layout="row" layout-align="start center">
+        <mat-icon class="mat-icon-logo" svgIcon="assets:logo"></mat-icon> <span class="md-title">E-post med en bekräftelselänk har skickats</span></mat-card-title>
+      <mat-divider></mat-divider>
+      <mat-card-content class="push-bottom-none">
+
+        <app-md-result-message 
+          [isSuccess]="(verificationSent$ | async)" 
+          successMessage="E-post med en bekräftelselänk till {{ (user$ | async)?.email }} har skickats"
+          [isError]="(error$ | async)"
+          errorMessage="{{ (error$ | async)?.getErrorMessageToDisplay() }}">
+        </app-md-result-message>
+
+        <span>
+          Vi har skickat ett e-postmeddelande till <strong>{{ (user$ | async)?.email }}</strong> innehållande en länk för att bekräfta
+          din e-postadress. Var snäll och klicka på länken i mailet för att säkerställa att vi har korrekt e-postadress.
+          <br>
+          <br> Om du inte får mailet inom några minuter klicka på knappen här nedan för att få ett nytt bekräftelse e-post
+          skickat till <strong>{{ (user$ | async)?.email }}</strong>.
+          <br>
+          <br>
+        </span>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <div layout="row">
+          <button flex mat-raised-button color="primary" [disabled]="!(user$ | async)?.email" (click)="onResendVerification()" class="text-upper">Skicka bekräftelse e-post</button>
+        </div>
+      </mat-card-actions>
+    </app-md-card-progress-bar>
+
+    <div class="mat-card-back-button">
+      <button type="button" mat-raised-button color="warn" (click)="onGoBack()">Tillbaka</button>
+    </div>
+  </div>
+</div>

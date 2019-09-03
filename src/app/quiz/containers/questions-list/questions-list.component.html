@@ -1,0 +1,48 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title> <h2>Frågor</h2> </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div layout="row">
+      <mat-form-field floatPlaceholder="never" flex>
+        <input matInput #filter placeholder="Sök på kategori...">
+      </mat-form-field>
+    </div>
+
+    <mat-table #table [dataSource]="dataSource">
+      <!-- ID Column -->
+      <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef> Titel </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.title}} </mat-cell>
+      </ng-container>ß
+
+      <!-- Progress Column -->
+      <ng-container matColumnDef="options">
+        <mat-header-cell *matHeaderCellDef> Antal Alternativ </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.options | keylength}} </mat-cell>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="categories">
+        <mat-header-cell *matHeaderCellDef> Antal Kategorier </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.categories | keylength}} </mat-cell>
+      </ng-container>
+
+      <!-- Color Column -->
+      <ng-container matColumnDef="remove">
+        <mat-header-cell *matHeaderCellDef> Ta Bort knapp </mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns; let index=index" (click)="onExpandRow(index, row)" #myRow></mat-row>
+  
+    </mat-table>
+
+    <app-md-progress-spinner-overlay [loading]="(getQuestionsActionState$ | async).isLoading"></app-md-progress-spinner-overlay>
+
+  </mat-card-content>
+</mat-card>
+<div class="mat-card-back-button">
+  <button type="button" mat-raised-button color="warn" (click)="onGoBack()">Tillbaka</button>
+</div>

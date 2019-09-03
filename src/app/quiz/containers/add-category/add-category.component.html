@@ -1,0 +1,25 @@
+<app-md-card-progress-bar [showLoading]="(addCategoryActionState$ | async).isLoading">
+  <mat-card-header>
+    <mat-card-title>Lägg till kategori</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="addCategoryForm" (ngSubmit)="onAddCategory()">
+
+      <div layout="row">
+        <app-category-input-autocomplete style="width:100%" [categories]="categories$ | async" (selectedCategory)="onSelectedCategory($event)"></app-category-input-autocomplete>
+        <div>
+          <button mat-raised-button color="warn" (click)="onAddCategory()" [disabled]="addCategoryForm.invalid" class="text-upper">Lägg till</button>
+        </div>
+      </div>
+
+      <div *ngIf="(addCategoryActionState$ | async).isSuccess" layout="row">
+        <td-message flex #successMessage color="accent" label="Resultat" sublabel="Kategori har lagts till.">
+          <button td-message-actions mat-icon-button (click)="successMessage.close()">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </td-message>
+      </div>
+
+    </form>
+  </mat-card-content>
+</app-md-card-progress-bar>

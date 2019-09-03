@@ -1,0 +1,27 @@
+Quiz
+    Kategori
+        X Skapa
+        X Ta bort
+            Saknas att ta bort från alla questions
+        X Visa
+    Frågor
+        X Visa alla
+        X Visa för Kategori
+        X Skapa fråga
+        Ta bort fråga
+        Ändra fråga
+
+Lägg till Loading för 
+    X Add Categories
+    X Get Categories
+
+    X Add Question
+    X Get Questions
+
+Lägg till Error för 
+    Add Categories
+    Get Categories
+
+    Add Question
+    Get Questions
+                    

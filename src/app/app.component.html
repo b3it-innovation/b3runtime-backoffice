@@ -1,0 +1,69 @@
+<td-layout>
+  <!-- Side navigation bar -->
+  <td-navigation-drawer *ngIf="(isLoggedIn$ | async)" flex sidenavTitle="B3Runtime" logo="assets:logo" name="{{ (user$ | async)?.displayName }}"
+    email="{{(user$ | async)?.email}}">
+    <mat-nav-list>
+      <a [tdLayoutToggle]="true" [routerLink]="['/map-home']" mat-list-item>
+        <mat-icon>edit_location</mat-icon>Kartor
+      </a>
+      <a [tdLayoutToggle]="true" [routerLink]="['/quiz-home']" mat-list-item>
+        <mat-icon>format_list_numbered</mat-icon>Frågor
+      </a>
+      <a mat-list-item>
+        <mat-icon>games</mat-icon>Bana
+      </a>
+
+      <a mat-list-item>
+        <mat-icon>event</mat-icon>Event
+      </a>
+      <a mat-list-item>
+        <mat-icon>timeline</mat-icon>Resultatlistor
+      </a>
+    </mat-nav-list>
+  </td-navigation-drawer>
+
+  <!-- Top navigation bar  -->
+  <td-layout-nav>
+    <div td-toolbar-content layout="row" layout-align="start center" flex>
+      <button *ngIf="(isLoggedIn$ | async)" mat-icon-button td-menu-button tdLayoutToggle>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-icon [routerLink]="['/']" class="mat-icon-logo cursor-pointer" svgIcon="assets:logo"></mat-icon>
+      <span [routerLink]="['/']" class="cursor-pointer">B3Runtime</span>
+      <span flex></span>
+
+      <!-- Login button START-->
+      <button mat-button="mat-button" class="sign-in-button " *ngIf="!(isLoggedIn$ | async)" class="sign-in-button" routerLink="/login"
+        routerLinkActive="active">Logga In</button>
+
+      <button *ngIf="(isLoggedIn$ | async)" mat-icon-button [matMenuTriggerFor]="toolbarUserMenu">
+          <mat-icon>person</mat-icon>
+      </button>
+
+      <mat-menu #toolbarUserMenu="matMenu">
+        <mat-card *ngIf="user$ | async">
+          <mat-card-header>
+            <img *ngIf="(user$ | async)?.displayPhotoUrl" matCardAvatar="matCardAvatar" [src]="(user$ | async)?.displayPhotoUrl === null ? '' : (user$ | async)?.displayPhotoUrl">
+            <mat-card-title>{{(user$ | async)?.displayName}}</mat-card-title>
+            <mat-card-subtitle>({{(user$ | async)?.email}})</mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+        <button mat-menu-item="mat-menu-item" (click)="onLogout()">
+            <mat-icon>power_settings_new</mat-icon>
+            <span>Logga ut</span>
+          </button>
+      </mat-menu>
+      <!-- Login button END-->
+    </div>
+
+
+    <!-- Routing goes here -->
+    <div class="view">
+      <div class="content" [@routerTransition]="o.isActivated && o.activatedRoute.routeConfig.path">
+        <router-outlet #o="outlet"></router-outlet>
+      </div>
+    </div>
+
+
+  </td-layout-nav>
+</td-layout>

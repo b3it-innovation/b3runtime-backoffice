@@ -1,0 +1,114 @@
+<div layout="row" >
+  <div flex>
+    <mat-card>
+        <mat-card-content>
+          <div layout="row" flex>
+            <div flex>
+            <mat-form-field style="width:100%">
+              <input matInput placeholder="Titel...">
+            </mat-form-field>    
+          </div>
+          </div> 
+        </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<div layout="row" >
+  <div flex="30">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Punkter</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <table td-data-table>
+          <thead>
+            <tr td-data-table-column-row>
+              <th td-data-table-column>
+                Namn
+              </th>
+              <th td-data-table-column>
+                Long
+              </th>
+              <th td-data-table-column>
+                Lat
+              </th>
+              <th td-data-table-column>
+                  
+              </th>
+              <th td-data-table-column>
+                  
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr td-data-table-row *ngFor="let m of mapLocations; let i = index">
+              <td td-data-table-cell>
+                {{m.label}}
+              </td>
+              <td td-data-table-cell>
+                {{m.lat | number : '2.3-3'}}
+              </td>
+              <td td-data-table-cell>
+                {{m.lng | number : '2.3-3'}}
+              </td>
+              <td td-data-table-cell>
+                <button mat-raised-button type="button" color="warn" (click)="onDeleteLocations(i); maps.lastOpen = null" class="text-upper">
+                  <mat-icon class="md-light">delete</mat-icon>
+                </button>
+              </td>
+              <td td-data-table-cell>
+                <mat-icon style="cursor: pointer;" (click)="onMoveUpLocation(i)">keyboard_arrow_up</mat-icon>
+                <mat-icon style="cursor: pointer;" (click)="onMoveDownLocation(i)">keyboard_arrow_down</mat-icon>
+              </td>                
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="mapLocations.length>0">
+          <button mat-raised-button type="button" color="primary" (click)="onSaveMap()" class="text-upper">
+            <mat-icon class="md-light">save</mat-icon>
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div flex>
+    <mat-card>
+      <mat-card-content>
+        <agm-map #maps [latitude]="startLatitude" [longitude]="startLongitude" [zoom]="zoomLevel" [disableDoubleClickZoom]="true" (mapClick)="onAddLocation($event)">
+          <div *ngFor="let mapLocation of mapLocations; let i = index">
+            <agm-marker #marker 
+            [latitude]="mapLocation.lat" 
+            [longitude]="mapLocation.lng" 
+            [label]="mapLocation.label" 
+            (markerClick)="maps.lastOpen?.close(); maps.lastOpen = infoWindow; markerClicked(infoWindow);"
+            
+            [markerDraggable]="true"
+            (dragEnd)="markerDragged($event, i)">
+
+              <agm-info-window [isOpen]="true" #infoWindow>
+                <mat-form-field>
+                  <input matInput placeholder="Namn..." [value]="mapLocation.label" (input)="onUpdateLabelForLocation($event.target.value, i);" (blur)="infoWindow.close()">
+                </mat-form-field>
+              </agm-info-window>
+
+            </agm-marker>
+            <agm-circle [radius]="100" [latitude]="mapLocation.lat" [longitude]="mapLocation.lng" [fillColor]="'red'"></agm-circle>
+
+            <agm-polyline
+              [visible]="true"
+              [strokeWeight]="1">
+             <agm-polyline-point
+               *ngFor="let mapLocation of mapLocations; let i = index"
+               [latitude]="mapLocation.lat"
+               [longitude]="mapLocation.lng">
+             </agm-polyline-point>
+           </agm-polyline>
+
+           
+          </div>
+        </agm-map>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

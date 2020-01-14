@@ -1,0 +1,16 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h2>Frågor</h2>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div layout="row">
+      <mat-form-field floatPlaceholder="never" flex>
+        <input matInput #filter placeholder="Sök på kategori...">
+      </mat-form-field>
+    </div>
+    <ul>
+      <li *ngFor="let question of  questions"> 
+        <div draggable="true" (dragstart)="onDragStart($event, question)">{{question.title}}</div></li>
+    </ul>

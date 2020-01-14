@@ -1,0 +1,8 @@
+<td-chips flex
+  color="warn" 
+  placeholder="Kategori... här är det "
+  [(ngModel)]="tagsModel"
+  [items]="filteredTags"
+  (inputChange)="onFilterList($event)"
+  (add)="onAddTag($event)"
+  (remove)="onRemoveTag($event)"></td-chips>

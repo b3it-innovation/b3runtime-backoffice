@@ -1,0 +1,56 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>
+      <h2>{{question.title}}</h2>
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div layout="row">
+      <p *ngIf="question.imgUrl">
+        {{question.imgUrl}}
+      </p>
+    </div>
+
+    <div layout="row">
+      <h3>Fråga</h3>
+    </div>
+    <div layout="row">
+      <textarea resizeToFitContent matTextareaAutosize matInput [value]="question.text" style="resize: none;"></textarea>
+    </div>
+
+    <div layout="row">
+      <h3>Definierade svarsalternativ</h3>
+    </div>
+    <div *ngFor="let option of question.options" layout="row" flex>
+      <div flex="5">
+        {{option.option}}
+      </div>
+      <div flex>
+        {{option.text}}
+      </div>
+    </div>
+
+    <div layout="row">
+      <h3>Kategorier</h3>
+    </div>
+    <div layout="row">
+      <mat-chip-list>
+        <mat-chip *ngFor="let category of categoriesForQuestion">
+          {{category}}
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <div layout="row">
+      <h3>Rätt svar</h3>
+    </div>
+    <div layout="row">
+      {{question.correctAnswer}}
+    </div>
+
+  </mat-card-content>
+  <mat-card-actions align="start">
+      <button flex mat-raised-button color="primary" (click)="onEditQuestion()" type="button" class="text-upper">Ändra</button>
+    </mat-card-actions>
+</mat-card>

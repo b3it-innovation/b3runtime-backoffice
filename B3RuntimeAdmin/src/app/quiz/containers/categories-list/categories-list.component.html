@@ -1,0 +1,42 @@
+<mat-card>
+  <mat-card-content>
+    <table td-data-table>
+      <thead>
+        <tr td-data-table-column-row>
+          <th td-data-table-column>
+            <span>Namn</span>
+          </th>
+          <th td-data-table-column [numeric]="true">
+            Antal Frågor
+          </th>
+          <th>
+
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr td-data-table-row *ngFor="let category of categories$ | async">
+          <td td-data-table-cell>
+            {{category.name}}
+          </td>
+          <td td-data-table-cell [numeric]="true">
+            <span>
+              {{ category?.questions | keylength}}
+            </span>
+            <button mat-raised-button type="button" color="accent" [disabled]="!category.questions" (click)="onShowQuestionsForCategory(category)"
+              class="text-upper">
+              <mat-icon class="md-light">remove_red_eye</mat-icon> Visa
+            </button>
+          </td>
+          <td align="right">
+            <button mat-raised-button type="button" color="warn" (click)="onDeleteCategory(category)" class="text-upper">
+              <mat-icon class="md-light">delete</mat-icon>Ta bort</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <app-md-progress-spinner-overlay [loading]="(getCategoriesActionState$ | async).isLoading"></app-md-progress-spinner-overlay>
+
+  </mat-card-content>
+</mat-card>

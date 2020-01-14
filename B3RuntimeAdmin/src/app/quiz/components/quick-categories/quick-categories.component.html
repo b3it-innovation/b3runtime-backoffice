@@ -1,0 +1,7 @@
+<div layout="row">
+    <app-quick-tag flex
+      [tagList]="allCategoriesName"
+      (addTag)="onAddCategory($event)"
+      (removeTag)="onRemoveCategory($event)">
+    </app-quick-tag>
+  </div>

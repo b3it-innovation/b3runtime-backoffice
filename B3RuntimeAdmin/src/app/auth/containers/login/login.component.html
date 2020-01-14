@@ -1,0 +1,79 @@
+<div layout="column" layout-align="center center">
+  <div class="page-container">
+    <app-md-card-progress-bar [showLoading]="isLoading$ | async">
+      <mat-card-title layout="row" layout-align="start center">
+        <mat-icon class="mat-icon-logo" svgIcon="assets:logo"></mat-icon>
+        <span class="md-title">B3Runtime inloggning</span>
+      </mat-card-title>
+      <mat-card-subtitle>Logga in med dina inloggningsuppgifter</mat-card-subtitle>
+      <mat-divider></mat-divider>
+      <mat-card-content class="push-bottom-none">
+
+        <div layout="row">
+          <button flex mat-raised-button color="primary" (click)="onGoogleLogin()" class="text-upper">
+            <div class="button-social-2">
+              <span class="fa fa-google"></span>
+              <div>Logga in med Google</div>
+            </div>
+          </button>
+        </div>
+
+        <form [formGroup]="loginForm">
+          <app-md-result-message [isError]="(error$ | async)" errorMessage="{{ (error$ | async)?.getErrorMessageToDisplay() }}">
+          </app-md-result-message>
+
+          <div class="horizontal-or-divider"></div>
+
+          <div layout="row">
+            <mat-form-field flex>
+              <input matInput formControlName="email" placeholder="E-Post..." type="text" name="username">
+              <mat-icon matSuffix>email</mat-icon>
+              <mat-error *ngIf="loginForm.get('email').hasError('required')">
+                E-Post är
+                <strong>obligatorisk</strong>
+              </mat-error>
+              <mat-error *ngIf="loginForm.get('email').hasError('email')">
+                Felaktigt format på e-post
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div layout="row" class="push-top-sm">
+            <mat-form-field flex>
+              <input matInput formControlName="password" placeholder="Lösenord..." type="password">
+              <mat-icon matSuffix>vpn_key</mat-icon>
+              <mat-error *ngIf="loginForm.get('password').hasError('required')">
+                Lösnenord är
+                <strong>obligatorisk</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 text-center">
+              Har du inget konto?
+              <strong>
+                <a style="cursor: pointer" (click)="onCreateAccount()">Klicka här</a>
+              </strong>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 text-center">
+              Glömt lösenord?
+              <strong>
+                <a style="cursor: pointer" (click)="onForgotPassword()">Klicka här</a>
+              </strong>
+            </div>
+          </div>
+
+        </form>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <div layout="row">
+          <button flex mat-raised-button color="primary" [disabled]="loginForm.invalid" (click)="onLogin()" class="text-upper">Logga In</button>
+        </div>
+      </mat-card-actions>
+    </app-md-card-progress-bar>
+  </div>
+</div>
